@@ -99,6 +99,7 @@ BuildRequires: /usr/bin/dtrace
 # workaround http://bugs.python.org/issue19804 (test_uuid requires ifconfig)
 BuildRequires: /usr/sbin/ifconfig
 
+Conflicts:     python3 = 3.8.3
 
 # =======================
 # Source code and patches
@@ -187,6 +188,7 @@ Requires: %{name}-libs = %{version}-%{release}
 #----------------------------------------------------
 %package libs
 Summary:        Python runtime libraries
+Conflicts: 	python3-libs = 3.8.3
 
 %description libs
 This package contains runtime libraries for use by Python:
@@ -198,6 +200,7 @@ This package contains runtime libraries for use by Python:
 %package devel
 Summary: Libraries and header files needed for Python development
 Requires: %{name} = %{version}-%{release}
+Conflicts: python3-devel = 3.8.3
 
 %description devel
 This package contains the header files and configuration needed to compile
@@ -266,7 +269,7 @@ CXX="/usr/bin/g++"
   --with-ssl-default-suites=openssl \
   --with-valgrind \
   --with-system-libmpdec \
-  --without-ensurepip
+  --with-ensurepip=yes
   %{nil}
 
 
@@ -289,6 +292,7 @@ CXX="/usr/bin/g++"
   rm -f %{buildroot}/usr/bin/2to3
   rm -f %{buildroot}/usr/bin/pyvenv
   rm -f %{buildroot}/usr/bin/python3
+  rm -f %{buildroot}/usr/bin/pip3
   
 # add idle3 to menu
 install -D -m 0644 Lib/idlelib/Icons/idle_16.png %{buildroot}%{_datadir}/icons/hicolor/16x16/apps/idle38.png
@@ -378,10 +382,29 @@ sed -i 's|/bin/sh|/usr/bin/sh|g' %{buildroot}/usr/bin/python3.8-config
 /usr/bin/idle3.8
 /usr/bin/pydoc3.8
 /usr/bin/python3.8
+/usr/bin/easy_install-3.8
+/usr/bin/pip3.8
 /usr/share/man/man1/python3.8.1.gz
 %{_metainfodir}/idle38.appdata.xml
 %{_datadir}/icons/hicolor/*/apps/idle38.png
 %{_datadir}/applications/idle38.desktop
+
+# PIP
+/usr/lib/python3.8/site-packages/easy_install.py
+/usr/lib/python3.8/site-packages/pip/
+/usr/lib/python3.8/site-packages/pip-19.2.3.dist-info/INSTALLER
+/usr/lib/python3.8/site-packages/pip-19.2.3.dist-info/LICENSE.txt
+/usr/lib/python3.8/site-packages/pip-19.2.3.dist-info/METADATA
+/usr/lib/python3.8/site-packages/pip-19.2.3.dist-info/RECORD
+/usr/lib/python3.8/site-packages/pip-19.2.3.dist-info/WHEEL
+/usr/lib/python3.8/site-packages/pip-19.2.3.dist-info/entry_points.txt
+/usr/lib/python3.8/site-packages/pip-19.2.3.dist-info/top_level.txt
+/usr/lib/python3.8/site-packages/__pycache__/easy_install.cpython-38.pyc
+
+# Setup tools
+/usr/lib/python3.8/site-packages/setuptools/
+/usr/lib/python3.8/site-packages/setuptools-41.2.0.dist-info/
+/usr/lib/python3.8/site-packages/pkg_resources/
 
 %files libs
 /usr/lib64/libpython3.8.so
@@ -396,6 +419,7 @@ sed -i 's|/bin/sh|/usr/bin/sh|g' %{buildroot}/usr/bin/python3.8-config
 #/usr/lib64/pkgconfig/python3-embed.pc
 /usr/lib64/pkgconfig/python-3.8.pc
 /usr/lib64/pkgconfig/python-3.8-embed.pc
+
 
 # ======================================================
 # Finally, the changelog:
