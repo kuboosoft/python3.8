@@ -41,7 +41,7 @@ URL: https://www.python.org/
 
 
 Version: 3.8.3
-Release: 4%{?dist}
+Release: 5%{?dist}
 License: Python
 
 # =======================
@@ -426,6 +426,10 @@ sed -i 's|/bin/sh|/usr/bin/sh|g' %{buildroot}/usr/bin/python3.8-config
 # ======================================================
 
 %changelog
+
+* Mon Sep 21 2020 David Va <davidva AT tuta DOT io> - 3.8.3-5
+- Rebuilt
+
 * Thu Jun 04 2020 David Va <davidva AT tuta DOT io> - 3.8.3-4
 - Cleaned and ready for the action
 
